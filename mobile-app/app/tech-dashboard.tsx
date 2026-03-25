@@ -13,6 +13,9 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
+import Header from '@/components/ui/Header';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 import { getMyAssignments, getMyShifts, getMySubmissionHistoryWithFallback, getMyWarnings, getStoredUser, getTodayProgress, getWorkOrders, type Assignment, type Shift, type SubmissionHistoryItem } from '../utils/api';
 
@@ -35,7 +38,7 @@ export const TechBottomNav = ({ activeRoute }: { activeRoute: string }) => {
                     <MaterialCommunityIcons
                         name={activeRoute === 'home' ? 'clipboard-list' : 'clipboard-list-outline'}
                         size={22}
-                        color={activeRoute === 'home' ? '#2563EB' : '#64748B'}
+                        color={activeRoute === 'home' ? '#6C5CE7' : '#94A3B8'}
                     />
                 </View>
                 <Text style={[navStyles.navText, activeRoute === 'home' && navStyles.navTextActive]}>Tasks</Text>
@@ -46,7 +49,7 @@ export const TechBottomNav = ({ activeRoute }: { activeRoute: string }) => {
                     <MaterialCommunityIcons
                         name={activeRoute === 'training' ? 'school' : 'school-outline'}
                         size={22}
-                        color={activeRoute === 'training' ? '#2563EB' : '#64748B'}
+                        color={activeRoute === 'training' ? '#6C5CE7' : '#94A3B8'}
                     />
                 </View>
                 <Text style={[navStyles.navText, activeRoute === 'training' && navStyles.navTextActive]}>Training</Text>
@@ -62,7 +65,7 @@ export const TechBottomNav = ({ activeRoute }: { activeRoute: string }) => {
                     <MaterialCommunityIcons
                         name={activeRoute === 'workorders' ? 'wrench-clock' : 'wrench-clock-outline'}
                         size={22}
-                        color={activeRoute === 'workorders' ? '#2563EB' : '#64748B'}
+                        color={activeRoute === 'workorders' ? '#6C5CE7' : '#94A3B8'}
                     />
                 </View>
                 <Text style={[navStyles.navText, activeRoute === 'workorders' && navStyles.navTextActive]}>W.O.</Text>
@@ -71,9 +74,9 @@ export const TechBottomNav = ({ activeRoute }: { activeRoute: string }) => {
             <TouchableOpacity style={navStyles.navItem} onPress={() => router.push('/user-history' as any)}>
                 <View style={[navStyles.iconWrapper, activeRoute === 'history' && navStyles.iconWrapperActive]}>
                     <MaterialCommunityIcons
-                        name={activeRoute === 'history' ? 'history' : 'history'}
+                        name='history'
                         size={22}
-                        color={activeRoute === 'history' ? '#2563EB' : '#64748B'}
+                        color={activeRoute === 'history' ? '#6C5CE7' : '#94A3B8'}
                     />
                 </View>
                 <Text style={[navStyles.navText, activeRoute === 'history' && navStyles.navTextActive]}>History</Text>
@@ -84,7 +87,7 @@ export const TechBottomNav = ({ activeRoute }: { activeRoute: string }) => {
                     <MaterialCommunityIcons
                         name={activeRoute === 'profile' ? 'account' : 'account-outline'}
                         size={22}
-                        color={activeRoute === 'profile' ? '#2563EB' : '#64748B'}
+                        color={activeRoute === 'profile' ? '#6C5CE7' : '#94A3B8'}
                     />
                 </View>
                 <Text style={[navStyles.navText, activeRoute === 'profile' && navStyles.navTextActive]}>Profile</Text>
@@ -98,11 +101,16 @@ const navStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        backgroundColor: '#FCFBFC',
-        paddingVertical: 12,
+        backgroundColor: '#FFFFFF',
+        paddingVertical: 10,
         paddingBottom: Platform.OS === 'ios' ? 28 : 12,
         borderTopWidth: 1,
-        borderTopColor: '#EAEAEA',
+        borderTopColor: '#EDE9FE',
+        shadowColor: '#6C5CE7',
+        shadowOffset: { width: 0, height: -4 },
+        shadowOpacity: 0.06,
+        shadowRadius: 10,
+        elevation: 12,
     },
     navItem: {
         alignItems: 'center',
@@ -110,36 +118,36 @@ const navStyles = StyleSheet.create({
         flex: 1,
     },
     iconWrapper: {
-        padding: 4,
+        padding: 6,
         borderRadius: 12,
     },
     iconWrapperActive: {
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#EDE9FE',
     },
     qrBtn: {
-        width: 54,
-        height: 54,
-        borderRadius: 27,
-        backgroundColor: '#2563EB',
+        width: 56,
+        height: 56,
+        borderRadius: 28,
+        backgroundColor: '#6C5CE7',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: -30,
-        shadowColor: '#2563EB',
-        shadowOffset: { width: 0, height: 6 },
-        shadowOpacity: 0.35,
-        shadowRadius: 10,
-        elevation: 8,
+        marginTop: -32,
+        shadowColor: '#6C5CE7',
+        shadowOffset: { width: 0, height: 8 },
+        shadowOpacity: 0.45,
+        shadowRadius: 14,
+        elevation: 10,
         borderWidth: 3,
         borderColor: '#FFFFFF',
     },
     navText: {
         fontSize: 10,
-        color: '#64748B',
-        marginTop: 4,
+        color: '#94A3B8',
+        marginTop: 3,
         fontWeight: '500',
     },
     navTextActive: {
-        color: '#2563EB',
+        color: '#6C5CE7',
         fontWeight: '700',
     },
 });
@@ -269,23 +277,7 @@ export default function TechDashboardScreen() {
 
     return (
         <SafeAreaView style={styles.container}>
-            {/* Header */}
-            <View style={styles.header}>
-                <View>
-                    <Text style={styles.headerGreeting}>Good Morning,</Text>
-                    <Text style={styles.headerTitle}>{userName}</Text>
-                </View>
-                <TouchableOpacity style={styles.bellBtn} onPress={() => router.push('/tech-notifications' as any)}>
-                    <MaterialCommunityIcons name="bell-outline" size={24} color="#334155" />
-                    {openWarningCount > 0 && (
-                        <View style={styles.notifDot}>
-                            {openWarningCount <= 9 && (
-                                <Text style={styles.notifDotTxt}>{openWarningCount}</Text>
-                            )}
-                        </View>
-                    )}
-                </TouchableOpacity>
-            </View>
+                    <Header title={`Good Morning, ${userName}`} subtitle="Your tasks for today" />
 
             <ScrollView
                 style={{ flex: 1 }}
@@ -315,10 +307,10 @@ export default function TechDashboardScreen() {
 
                 {/* Assigned Tasks header with tabs */}
                 <Animated.View entering={FadeInUp.delay(100).duration(400)} style={styles.rowBetween}>
-                    <Text style={styles.assignedTitle}>My Tasks</Text>
-                    <TouchableOpacity onPress={() => router.push('/tech-tasks' as any)}>
-                        <Text style={styles.viewAll}>See All →</Text>
-                    </TouchableOpacity>
+                    <View style={{ flex: 1 }}>
+                        <Text style={styles.assignedTitle}>My Tasks</Text>
+                    </View>
+                    <Button title="See All" onPress={() => router.push('/tech-tasks' as any)} variant="ghost" />
                 </Animated.View>
 
                 {/* Tab bar */}
@@ -503,7 +495,7 @@ export default function TechDashboardScreen() {
                                                 <Text style={[styles.startBtnText, !isFirst && styles.startBtnTextOutline]}>
                                                     Start Task
                                                 </Text>
-                                                <MaterialCommunityIcons name="arrow-right" size={16} color={isFirst ? '#FFFFFF' : '#2563EB'} style={{ marginLeft: 4 }} />
+                                                <MaterialCommunityIcons name="arrow-right" size={16} color={isFirst ? '#FFFFFF' : '#6C5CE7'} style={{ marginLeft: 4 }} />
                                             </View>
                                         </View>
                                     </View>
@@ -522,98 +514,75 @@ export default function TechDashboardScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#FAF9F6' }, // Slight off-white, light professional bg
+    container: { flex: 1, backgroundColor: '#F5F3FF' },
     center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-
-    // Header
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: 20,
-        paddingTop: Platform.OS === 'android' ? 48 : 20,
-        paddingBottom: 16,
-        backgroundColor: '#FAF9F6',
-    },
-    headerGreeting: { fontSize: 13, color: '#64748B', fontWeight: '500', marginBottom: 2 },
-    headerTitle: { fontSize: 22, fontWeight: '800', color: '#0F172A', letterSpacing: -0.5 },
-    bellBtn: { width: 44, height: 44, borderRadius: 22, backgroundColor: '#FFFFFF', justifyContent: 'center', alignItems: 'center', shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.05, shadowRadius: 4, elevation: 2 },
-    notifDot: {
-        position: 'absolute', top: 8, right: 10,
-        minWidth: 16, height: 16, borderRadius: 8,
-        backgroundColor: '#EF4444',
-        justifyContent: 'center', alignItems: 'center',
-        paddingHorizontal: 3,
-    },
-    notifDotTxt: {
-        color: '#fff', fontSize: 9, fontWeight: '800', lineHeight: 11,
-    },
 
     scroll: { padding: 20, paddingTop: 4 },
 
-    // Progress card
+    // Progress card - vibrant purple gradient effect
     progressCard: {
-        backgroundColor: '#FFFFFF',
-        borderRadius: 20,
-        padding: 24,
-        marginBottom: 28,
-        shadowColor: '#64748B', shadowOffset: { width: 0, height: 8 },
-        shadowOpacity: 0.06, shadowRadius: 16, elevation: 4,
-        borderWidth: 1, borderColor: '#F1F5F9',
+        backgroundColor: '#6C5CE7',
+        borderRadius: 22,
+        padding: 22,
+        marginBottom: 24,
+        shadowColor: '#6C5CE7',
+        shadowOffset: { width: 0, height: 10 },
+        shadowOpacity: 0.35,
+        shadowRadius: 18,
+        elevation: 8,
     },
-    progressTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 },
-    progressLabel: { fontSize: 13, fontWeight: '600', color: '#64748B', marginBottom: 4 },
+    progressTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 18 },
+    progressLabel: { fontSize: 12, fontWeight: '700', color: 'rgba(255,255,255,0.75)', marginBottom: 4, textTransform: 'uppercase', letterSpacing: 0.5 },
     progressFraction: { flexDirection: 'row', alignItems: 'baseline' },
-    progressDone: { fontSize: 36, fontWeight: '900', color: '#0F172A', letterSpacing: -1 },
-    progressTotal: { fontSize: 16, fontWeight: '600', color: '#94A3B8' },
+    progressDone: { fontSize: 38, fontWeight: '900', color: '#FFFFFF', letterSpacing: -1 },
+    progressTotal: { fontSize: 15, fontWeight: '600', color: 'rgba(255,255,255,0.65)' },
     pctBadge: {
-        backgroundColor: '#EFF6FF', borderRadius: 12,
-        paddingHorizontal: 12, paddingVertical: 6,
+        backgroundColor: 'rgba(255,255,255,0.2)', borderRadius: 12,
+        paddingHorizontal: 14, paddingVertical: 7,
     },
-    pctText: { fontSize: 13, fontWeight: '700', color: '#2563EB' },
+    pctText: { fontSize: 15, fontWeight: '800', color: '#FFFFFF' },
     progressBarBg: {
-        height: 6, backgroundColor: '#F1F5F9', borderRadius: 3, marginBottom: 12, overflow: 'hidden',
+        height: 7, backgroundColor: 'rgba(255,255,255,0.25)', borderRadius: 4, marginBottom: 12, overflow: 'hidden',
     },
     progressBarFill: {
-        height: '100%', backgroundColor: '#2563EB', borderRadius: 3,
+        height: '100%', backgroundColor: '#FFFFFF', borderRadius: 4,
     },
-    motivationText: { fontSize: 13, color: '#64748B', fontWeight: '500' },
+    motivationText: { fontSize: 13, color: 'rgba(255,255,255,0.8)', fontWeight: '600' },
 
     // Section row
     rowBetween: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
-    assignedTitle: { fontSize: 18, fontWeight: '800', color: '#0F172A', letterSpacing: -0.3 },
-    viewAll: { fontSize: 14, fontWeight: '600', color: '#2563EB' },
+    assignedTitle: { fontSize: 18, fontWeight: '800', color: '#1E1B4B', letterSpacing: -0.3 },
+    viewAll: { fontSize: 14, fontWeight: '600', color: '#6C5CE7' },
 
     // Tabs
     tabRow: {
         flexDirection: 'row',
-        backgroundColor: '#F1F5F9',
-        borderRadius: 12,
-        padding: 3,
+        backgroundColor: '#EDE9FE',
+        borderRadius: 14,
+        padding: 4,
         marginBottom: 14,
-        gap: 2,
     },
     tabBtn: {
         flex: 1,
-        paddingVertical: 8,
-        borderRadius: 10,
+        paddingVertical: 9,
+        borderRadius: 11,
         alignItems: 'center',
     },
     tabBtnActive: {
-        backgroundColor: '#FFFFFF',
-        shadowColor: '#64748B',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.06,
-        shadowRadius: 3,
-        elevation: 1,
+        backgroundColor: '#6C5CE7',
+        shadowColor: '#6C5CE7',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 6,
+        elevation: 3,
     },
     tabBtnText: {
         fontSize: 12,
         fontWeight: '600',
-        color: '#64748B',
+        color: '#7C6FB0',
     },
     tabBtnTextActive: {
-        color: '#0F172A',
+        color: '#FFFFFF',
         fontWeight: '800',
     },
 
@@ -622,24 +591,29 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#FFFFFF',
-        borderRadius: 12,
-        padding: 12,
+        borderRadius: 14,
+        padding: 14,
         marginBottom: 8,
         borderWidth: 1,
-        borderColor: '#F1F5F9',
+        borderColor: '#EDE9FE',
         gap: 10,
+        shadowColor: '#6C5CE7',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.04,
+        shadowRadius: 6,
+        elevation: 1,
     },
     histIcon: {
-        width: 38,
-        height: 38,
-        borderRadius: 10,
+        width: 40,
+        height: 40,
+        borderRadius: 12,
         alignItems: 'center',
         justifyContent: 'center',
     },
     histName: {
         fontSize: 13.5,
         fontWeight: '700',
-        color: '#0F172A',
+        color: '#1E1B4B',
     },
     histDate: {
         fontSize: 11.5,
@@ -659,22 +633,26 @@ const styles = StyleSheet.create({
     // Task card
     taskCard: {
         backgroundColor: '#FFFFFF',
-        borderRadius: 16,
+        borderRadius: 18,
         marginBottom: 14,
-        shadowColor: '#64748B', shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.04, shadowRadius: 8, elevation: 2,
-        borderWidth: 1, borderColor: '#F1F5F9',
+        shadowColor: '#6C5CE7',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.06,
+        shadowRadius: 10,
+        elevation: 3,
+        borderWidth: 1,
+        borderColor: '#EDE9FE',
         flexDirection: 'row',
         overflow: 'hidden',
     },
     taskCardHighlight: {
-        shadowOpacity: 0.08,
-        shadowRadius: 12,
-        borderColor: '#E2E8F0',
+        shadowOpacity: 0.12,
+        shadowRadius: 16,
+        borderColor: '#DDD6FE',
     },
     cardIndicator: {
-        width: 4,
-        backgroundColor: '#2563EB',
+        width: 5,
+        backgroundColor: '#6C5CE7',
     },
     taskContent: {
         flex: 1,
@@ -683,42 +661,42 @@ const styles = StyleSheet.create({
     taskTopRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
     priorityBadge: {
         flexDirection: 'row', alignItems: 'center', gap: 4,
-        paddingHorizontal: 8, paddingVertical: 4, borderRadius: 6,
+        paddingHorizontal: 9, paddingVertical: 4, borderRadius: 7,
     },
-    priorityText: { fontSize: 11, fontWeight: '700', textTransform: 'uppercase', letterSpacing: 0.5 },
+    priorityText: { fontSize: 10, fontWeight: '700', textTransform: 'uppercase', letterSpacing: 0.5 },
     dueText: { fontSize: 12, color: '#64748B', fontWeight: '600' },
-    taskName: { fontSize: 16, fontWeight: '700', color: '#0F172A', marginBottom: 8, letterSpacing: -0.2 },
-    taskLocRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 16 },
+    taskName: { fontSize: 15, fontWeight: '700', color: '#1E1B4B', marginBottom: 8, letterSpacing: -0.2 },
+    taskLocRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 14 },
     taskLoc: { fontSize: 13, color: '#64748B', fontWeight: '500' },
-    taskBottom: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderTopWidth: 1, borderTopColor: '#F8FAFC', paddingTop: 12 },
+    taskBottom: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderTopWidth: 1, borderTopColor: '#F5F3FF', paddingTop: 12 },
     avatarCircle: {
         width: 32, height: 32, borderRadius: 16,
-        backgroundColor: '#F1F5F9', justifyContent: 'center', alignItems: 'center',
-        borderWidth: 1, borderColor: '#E2E8F0',
+        backgroundColor: '#EDE9FE', justifyContent: 'center', alignItems: 'center',
+        borderWidth: 1.5, borderColor: '#DDD6FE',
     },
-    avatarText: { fontSize: 11, fontWeight: '700', color: '#475569' },
+    avatarText: { fontSize: 11, fontWeight: '800', color: '#6C5CE7' },
     startBtn: {
         flexDirection: 'row', alignItems: 'center',
         paddingHorizontal: 16, paddingVertical: 8, borderRadius: 20,
     },
-    startBtnSolid: { backgroundColor: '#2563EB' },
-    startBtnOutline: { backgroundColor: '#EFF6FF' },
+    startBtnSolid: { backgroundColor: '#6C5CE7' },
+    startBtnOutline: { backgroundColor: '#EDE9FE' },
     startBtnText: { fontSize: 13, fontWeight: '700', color: '#FFFFFF' },
-    startBtnTextOutline: { color: '#2563EB' },
+    startBtnTextOutline: { color: '#6C5CE7' },
 
-    emptyBox: { alignItems: 'center', paddingVertical: 48, backgroundColor: '#FFFFFF', borderRadius: 16, borderWidth: 1, borderColor: '#F1F5F9', borderStyle: 'dashed' },
-    emptyIconCircle: { width: 64, height: 64, borderRadius: 32, backgroundColor: '#ECFDF5', alignItems: 'center', justifyContent: 'center', marginBottom: 16 },
-    emptyTitle: { fontSize: 16, fontWeight: '700', color: '#0F172A', marginBottom: 4 },
-    emptyText: { fontSize: 14, color: '#94A3B8' },
+    emptyBox: { alignItems: 'center', paddingVertical: 48, backgroundColor: '#FFFFFF', borderRadius: 18, borderWidth: 1.5, borderColor: '#EDE9FE', borderStyle: 'dashed' },
+    emptyIconCircle: { width: 64, height: 64, borderRadius: 32, backgroundColor: '#D1FAE5', alignItems: 'center', justifyContent: 'center', marginBottom: 16 },
+    emptyTitle: { fontSize: 16, fontWeight: '700', color: '#1E1B4B', marginBottom: 4 },
+    emptyText: { fontSize: 14, color: '#94A3B8', textAlign: 'center', paddingHorizontal: 24 },
 });
 
 const shiftBannerStyles = StyleSheet.create({
-    container: { flexDirection: 'row', alignItems: 'center', gap: 10, borderRadius: 12, padding: 12, marginBottom: 12, borderWidth: 1 },
-    active: { backgroundColor: '#f0fdf4', borderColor: '#bbf7d0' },
-    inactive: { backgroundColor: '#f8fafc', borderColor: '#e2e8f0' },
-    iconWrap: { width: 34, height: 34, borderRadius: 8, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center' },
-    name: { fontSize: 14, fontWeight: '700', color: '#15803d', marginBottom: 1 },
-    time: { fontSize: 12, color: '#4ade80' },
-    activeBadge: { backgroundColor: '#dcfce7', borderRadius: 20, paddingHorizontal: 8, paddingVertical: 3 },
-    activeBadgeText: { fontSize: 11, fontWeight: '700', color: '#16a34a' },
+    container: { flexDirection: 'row', alignItems: 'center', gap: 10, borderRadius: 14, padding: 14, marginBottom: 12, borderWidth: 1.5 },
+    active: { backgroundColor: '#ECFDF5', borderColor: '#A7F3D0' },
+    inactive: { backgroundColor: '#F5F3FF', borderColor: '#DDD6FE' },
+    iconWrap: { width: 36, height: 36, borderRadius: 10, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center', shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.06, shadowRadius: 2, elevation: 1 },
+    name: { fontSize: 14, fontWeight: '700', color: '#065F46', marginBottom: 1 },
+    time: { fontSize: 12, color: '#10B981', fontWeight: '600' },
+    activeBadge: { backgroundColor: '#D1FAE5', borderRadius: 20, paddingHorizontal: 9, paddingVertical: 4 },
+    activeBadgeText: { fontSize: 11, fontWeight: '800', color: '#059669' },
 });

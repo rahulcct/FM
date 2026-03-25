@@ -11,105 +11,84 @@ import {
     View,
 } from 'react-native';
 
-// Define the grid items
+// Define the grid items with vibrant colors
 const DASHBOARD_ITEMS = [
-    { id: '1', title: 'Asset', icon: 'office-building', color: '#2B6CB0', iconType: 'MaterialCommunityIcons' },
-    { id: '2', title: 'Warnings', icon: 'bell-outline', color: '#E53E3E', iconType: 'MaterialCommunityIcons' },
-    { id: '3', title: 'CheckList', icon: 'check-all', color: '#667EEA', iconType: 'MaterialCommunityIcons' },
-    { id: '4', title: 'Work Order', icon: 'card-account-details-outline', color: '#9F7AEA', iconType: 'MaterialCommunityIcons' },
-    { id: '5', title: 'Logs Sheet', icon: 'calendar-blank-outline', color: '#319795', iconType: 'MaterialCommunityIcons' },
-    { id: '6', title: 'Training', icon: 'school-outline', color: '#E53E3E', iconType: 'Ionicons' },
+    { id: '1', title: 'Assets', icon: 'office-building', color: '#6C5CE7', bg: '#EDE9FE', iconType: 'MaterialCommunityIcons', route: '/assets-list' },
+    { id: '2', title: 'Warnings', icon: 'bell-outline', color: '#EF4444', bg: '#FEE2E2', iconType: 'MaterialCommunityIcons', route: '/warnings' },
+    { id: '3', title: 'Checklists', icon: 'check-all', color: '#10B981', bg: '#D1FAE5', iconType: 'MaterialCommunityIcons', route: '/checklists' },
+    { id: '4', title: 'Work Orders', icon: 'card-account-details-outline', color: '#3B82F6', bg: '#DBEAFE', iconType: 'MaterialCommunityIcons', route: null },
+    { id: '5', title: 'Log Sheets', icon: 'calendar-blank-outline', color: '#0891B2', bg: '#E0F2FE', iconType: 'MaterialCommunityIcons', route: null },
+    { id: '6', title: 'Training', icon: 'school-outline', color: '#F59E0B', bg: '#FEF3C7', iconType: 'Ionicons', route: '/ojt-training-list' },
 ];
 
 export default function DashboardScreen() {
 
-    // Render function for each grid item
     const renderItem = ({ item }: { item: typeof DASHBOARD_ITEMS[0] }) => (
         <TouchableOpacity
-            style={styles.gridItem}
-            activeOpacity={0.7}
+            style={[styles.gridItem, { borderTopColor: item.color }]}
+            activeOpacity={0.75}
             onPress={() => {
-                if (item.title === 'Asset') {
-                    router.push('/assets-list');
-                } else if (item.title === 'Warnings') {
-                    router.push('/warnings');
-                } else if (item.title === 'CheckList') {
-                    router.push('/checklists');
-                } else if (item.title === 'Training') {
-                    router.push('/ojt-training-list');
-                }
+                if (item.route) router.push(item.route as any);
             }}
         >
-            <View style={[styles.iconContainer, { backgroundColor: item.color + '15' }]}>
+            <View style={[styles.iconContainer, { backgroundColor: item.bg }]}>
                 {item.iconType === 'Ionicons' ? (
-                    <Ionicons name={item.icon as any} size={28} color={item.color} />
+                    <Ionicons name={item.icon as any} size={26} color={item.color} />
                 ) : (
-                    <MaterialCommunityIcons name={item.icon as any} size={28} color={item.color} />
+                    <MaterialCommunityIcons name={item.icon as any} size={26} color={item.color} />
                 )}
             </View>
             <Text style={styles.gridItemText}>{item.title}</Text>
+            <MaterialCommunityIcons name="arrow-right" size={14} color="#CBD5E1" style={{ marginTop: 4 }} />
         </TouchableOpacity>
     );
 
     return (
         <SafeAreaView style={styles.container}>
-            {/* Top Navigation Bar - Blue Background */}
+            {/* Header */}
             <View style={styles.headerContainer}>
-                {/* Left: Zone Menu */}
-                <TouchableOpacity style={styles.headerLeft}>
-                    <Text style={styles.headerText}>Zone 1</Text>
-                    <MaterialCommunityIcons name="chevron-down" size={20} color="#FFFFFF" />
-                </TouchableOpacity>
-
-                {/* Center: Role Info */}
-                <TouchableOpacity style={styles.headerCenter}>
-                    <Text style={styles.roleLabel}>Role</Text>
-                    <View style={styles.roleSelector}>
-                        <Text style={styles.roleText}>HK Supervisor</Text>
-                        <MaterialCommunityIcons name="chevron-down" size={16} color="#FFFFFF" />
-                    </View>
-                </TouchableOpacity>
-
-                {/* Right: Actions */}
+                <View style={styles.headerLeft}>
+                    <Text style={styles.welcomeText}>Good Day</Text>
+                    <Text style={styles.headerTitle}>FM Dashboard</Text>
+                </View>
                 <View style={styles.headerRight}>
-                    <TouchableOpacity style={styles.actionButton}>
-                        <MaterialCommunityIcons name="refresh" size={22} color="#FFFFFF" />
+                    <TouchableOpacity style={styles.actionBtn}>
+                        <MaterialCommunityIcons name="bell-outline" size={20} color="#FFFFFF" />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.actionButton} onPress={() => router.push('/profile')}>
-                        <MaterialCommunityIcons name="account-circle-outline" size={24} color="#FFFFFF" />
+                    <TouchableOpacity style={styles.avatarBtn} onPress={() => router.push('/profile')}>
+                        <Text style={styles.avatarText}>U</Text>
                     </TouchableOpacity>
                 </View>
             </View>
 
-            {/* Main Content Area */}
-            <View style={styles.contentContainer}>
-
-                {/* TATA Logo Placeholder */}
-                <View style={styles.logoContainer}>
-                    <View style={styles.tataLogoShape}>
-                        <View style={styles.tataLogoTopSquare} />
-                        <View style={styles.tataLogoBottomTriangle} />
-                    </View>
-                    <Text style={styles.tataLogoText}>TATA</Text>
+            {/* Catalyst badge */}
+            <View style={styles.brandBanner}>
+                <View style={styles.brandIcon}>
+                    <MaterialCommunityIcons name="lightning-bolt" size={20} color="#FFFFFF" />
                 </View>
-
-                {/* Grid of Options */}
-                <FlatList
-                    data={DASHBOARD_ITEMS}
-                    renderItem={renderItem}
-                    keyExtractor={(item) => item.id}
-                    numColumns={2}
-                    contentContainerStyle={styles.gridContainer}
-                    columnWrapperStyle={styles.row}
-                    showsVerticalScrollIndicator={false}
-                />
-
-                {/* Footer */}
-                <View style={styles.footerContainer}>
-                    <Text style={styles.footerText}>Logged in as User</Text>
-                    {Platform.OS === 'ios' && <View style={styles.homeIndicatorPlaceholder} />}
+                <View style={{ flex: 1 }}>
+                    <Text style={styles.brandTitle}>CATALYST FM</Text>
+                    <Text style={styles.brandSub}>Facility Management System</Text>
+                </View>
+                <View style={styles.liveBadge}>
+                    <View style={styles.liveDot} />
+                    <Text style={styles.liveText}>LIVE</Text>
                 </View>
             </View>
+
+            {/* Section label */}
+            <Text style={styles.sectionLabel}>QUICK ACCESS</Text>
+
+            {/* Grid of Options */}
+            <FlatList
+                data={DASHBOARD_ITEMS}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id}
+                numColumns={2}
+                contentContainerStyle={styles.gridContainer}
+                columnWrapperStyle={styles.row}
+                showsVerticalScrollIndicator={false}
+            />
         </SafeAreaView>
     );
 }
@@ -117,145 +96,171 @@ export default function DashboardScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#1A36A8', // Match the blue header background so safe area top is blue
+        backgroundColor: '#F5F3FF',
     },
+
+    // Header
     headerContainer: {
-        backgroundColor: '#1E3A8A', // Deep blue
+        backgroundColor: '#1E1B4B',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingHorizontal: 16,
-        paddingVertical: 12,
-        marginTop: Platform.OS === 'android' ? 30 : 0, // avoid overlap with status bar on android
-        height: 70,
+        paddingHorizontal: 20,
+        paddingTop: Platform.OS === 'android' ? 44 : 16,
+        paddingBottom: 18,
     },
     headerLeft: {
-        flexDirection: 'row',
-        alignItems: 'center',
         flex: 1,
     },
-    headerText: {
-        color: '#FFFFFF',
-        fontSize: 16,
-        fontWeight: '600',
-        marginRight: 4,
-    },
-    headerCenter: {
-        alignItems: 'center',
-        flex: 2,
-    },
-    roleLabel: {
-        color: '#A0AEC0', // Light greyish blue
+    welcomeText: {
         fontSize: 12,
+        color: '#A78BFA',
+        fontWeight: '600',
+        letterSpacing: 0.5,
+        textTransform: 'uppercase',
+        marginBottom: 2,
     },
-    roleSelector: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    roleText: {
+    headerTitle: {
+        fontSize: 22,
+        fontWeight: '800',
         color: '#FFFFFF',
-        fontSize: 14,
-        fontWeight: '700',
-        marginRight: 2,
+        letterSpacing: -0.3,
     },
     headerRight: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'flex-end',
-        flex: 1,
+        gap: 12,
     },
-    actionButton: {
-        marginLeft: 16,
-    },
-    contentContainer: {
-        flex: 1,
-        backgroundColor: '#F3F4F6', // Light grayish background for the whole body
-    },
-    logoContainer: {
-        alignItems: 'center',
-        marginTop: 32,
-        marginBottom: 24,
-    },
-    tataLogoShape: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 6,
-    },
-    tataLogoTopSquare: {
+    actionBtn: {
         width: 40,
-        height: 12,
-        backgroundColor: '#2B6CB0',
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: 'rgba(255,255,255,0.1)',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    tataLogoBottomTriangle: {
-        width: 0,
-        height: 0,
-        backgroundColor: 'transparent',
-        borderStyle: 'solid',
-        borderLeftWidth: 20,
-        borderRightWidth: 20,
-        borderTopWidth: 15,
-        borderLeftColor: 'transparent',
-        borderRightColor: 'transparent',
-        borderTopColor: '#2B6CB0',
+    avatarBtn: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: '#6C5CE7',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 2,
+        borderColor: 'rgba(255,255,255,0.3)',
     },
-    tataLogoText: {
-        fontSize: 24,
-        fontWeight: '900',
-        color: '#2B6CB0',
-        letterSpacing: 2,
+    avatarText: {
+        color: '#FFFFFF',
+        fontSize: 14,
+        fontWeight: '800',
     },
+
+    // Brand Banner
+    brandBanner: {
+        backgroundColor: '#6C5CE7',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginHorizontal: 16,
+        marginTop: 16,
+        marginBottom: 6,
+        borderRadius: 16,
+        padding: 14,
+        gap: 12,
+        shadowColor: '#6C5CE7',
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.3,
+        shadowRadius: 12,
+        elevation: 8,
+    },
+    brandIcon: {
+        width: 40,
+        height: 40,
+        borderRadius: 12,
+        backgroundColor: 'rgba(255,255,255,0.2)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    brandTitle: {
+        fontSize: 14,
+        fontWeight: '800',
+        color: '#FFFFFF',
+        letterSpacing: 1,
+    },
+    brandSub: {
+        fontSize: 11,
+        color: 'rgba(255,255,255,0.7)',
+        marginTop: 1,
+    },
+    liveBadge: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'rgba(255,255,255,0.15)',
+        borderRadius: 20,
+        paddingHorizontal: 10,
+        paddingVertical: 4,
+        gap: 5,
+    },
+    liveDot: {
+        width: 6,
+        height: 6,
+        borderRadius: 3,
+        backgroundColor: '#4ADE80',
+    },
+    liveText: {
+        fontSize: 11,
+        color: '#FFFFFF',
+        fontWeight: '800',
+        letterSpacing: 1,
+    },
+
+    // Section label
+    sectionLabel: {
+        fontSize: 11,
+        fontWeight: '700',
+        color: '#94A3B8',
+        letterSpacing: 1,
+        textTransform: 'uppercase',
+        marginHorizontal: 24,
+        marginTop: 20,
+        marginBottom: 12,
+    },
+
+    // Grid
     gridContainer: {
-        paddingHorizontal: 16,
-        paddingBottom: 20,
+        paddingHorizontal: 12,
+        paddingBottom: 24,
     },
     row: {
         flex: 1,
         justifyContent: 'space-between',
-        marginBottom: 16,
+        marginBottom: 12,
     },
     gridItem: {
         backgroundColor: '#FFFFFF',
         flex: 1,
-        marginHorizontal: 8,
-        borderRadius: 12,
-        paddingVertical: 24,
+        marginHorizontal: 6,
+        borderRadius: 18,
+        paddingVertical: 22,
+        paddingHorizontal: 14,
         alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.05,
-        shadowRadius: 4,
-        elevation: 2,
+        shadowColor: '#6C5CE7',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.08,
+        shadowRadius: 10,
+        elevation: 3,
+        borderTopWidth: 3,
     },
     iconContainer: {
         width: 56,
         height: 56,
-        borderRadius: 28,
+        borderRadius: 16,
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 12,
+        marginBottom: 10,
     },
     gridItemText: {
-        fontSize: 14,
-        fontWeight: '600',
-        color: '#1A202C',
+        fontSize: 13,
+        fontWeight: '700',
+        color: '#1E1B4B',
     },
-    footerContainer: {
-        alignItems: 'center',
-        paddingVertical: 20,
-        backgroundColor: '#F3F4F6',
-    },
-    footerText: {
-        color: '#A0AEC0',
-        fontSize: 14,
-    },
-    homeIndicatorPlaceholder: {
-        width: 134,
-        height: 5,
-        backgroundColor: '#CBD5E0',
-        borderRadius: 100,
-        marginTop: 20,
-        marginBottom: 8,
-    }
 });

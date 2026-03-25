@@ -6,7 +6,6 @@ import {
     Alert,
     KeyboardAvoidingView,
     Platform,
-    SafeAreaView,
     StyleSheet,
     Text,
     TextInput,
@@ -103,44 +102,42 @@ export default function EmployeeLoginScreen() {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             {/* Back Button */}
-            <TouchableOpacity
-                style={styles.backButton}
-                onPress={() => router.back()}
-            >
-                <MaterialCommunityIcons name="arrow-left" size={24} color="#1A202C" />
+            <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+                <View style={styles.backBtnCircle}>
+                    <MaterialCommunityIcons name="arrow-left" size={20} color="#FFFFFF" />
+                </View>
             </TouchableOpacity>
+
+            {/* Hero Section */}
+            <View style={styles.heroSection}>
+                <View style={styles.logoBadge}>
+                    <MaterialCommunityIcons name="shield-account" size={32} color="#FFFFFF" />
+                </View>
+                <Text style={styles.appName}>Welcome Back</Text>
+                <Text style={styles.companyName}>{companyName || 'Loading company...'}</Text>
+            </View>
 
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 style={styles.keyboardView}
             >
-                <View style={styles.formContainer}>
-                    {/* Header section */}
-                    <Text style={styles.header}>Welcome Back</Text>
-                    <Text style={styles.subtitle}>{companyName || 'Please enter your employee details.'}</Text>
+                {/* Form Card */}
+                <View style={styles.formCard}>
+                    <Text style={styles.formTitle}>Sign In</Text>
+                    <Text style={styles.formSubtitle}>Enter your employee credentials</Text>
 
-                    {/* Logo Placeholder */}
-                    <View style={styles.logoContainer}>
-                        <Text style={styles.logoTextMain}>C A T A L Y S T</Text>
-                        <Text style={styles.logoTextSub}>PARTNERING FOR SUSTAINABILITY</Text>
-                    </View>
-
-                    {/* Input section */}
                     <View style={styles.inputSection}>
                         <Text style={styles.label}>Username</Text>
                         <View style={styles.inputContainer}>
-                            <MaterialCommunityIcons
-                                name="account-outline"
-                                size={24}
-                                color="#8E8E93"
-                                style={styles.inputIcon}
-                            />
+                            <View style={styles.inputIconBox}>
+                                <MaterialCommunityIcons name="account-outline" size={18} color="#6C5CE7" />
+                            </View>
                             <TextInput
                                 style={styles.input}
-                                placeholder="Enter username"
-                                placeholderTextColor="#C7C7CC"
+                                placeholder="Employee username"
+                                placeholderTextColor="#A0AEC0"
                                 value={employeeId}
                                 onChangeText={setEmployeeId}
                                 autoCapitalize="none"
@@ -152,39 +149,32 @@ export default function EmployeeLoginScreen() {
                     <View style={styles.inputSection}>
                         <Text style={styles.label}>Password</Text>
                         <View style={styles.inputContainer}>
-                            <MaterialCommunityIcons
-                                name="lock-outline"
-                                size={24}
-                                color="#8E8E93"
-                                style={styles.inputIcon}
-                            />
+                            <View style={styles.inputIconBox}>
+                                <MaterialCommunityIcons name="lock-outline" size={18} color="#6C5CE7" />
+                            </View>
                             <TextInput
                                 style={styles.input}
-                                placeholder="Enter Password"
-                                placeholderTextColor="#C7C7CC"
+                                placeholder="Enter password"
+                                placeholderTextColor="#A0AEC0"
                                 value={password}
                                 onChangeText={setPassword}
                                 secureTextEntry={!showPassword}
                                 autoCapitalize="none"
                                 editable={!isLoading}
                             />
-                            <TouchableOpacity 
-                                onPress={() => setShowPassword(!showPassword)}
-                                disabled={isLoading}
-                            >
+                            <TouchableOpacity onPress={() => setShowPassword(!showPassword)} disabled={isLoading} style={styles.eyeBtn}>
                                 <MaterialCommunityIcons
                                     name={showPassword ? "eye-off-outline" : "eye-outline"}
-                                    size={24}
-                                    color="#8E8E93"
+                                    size={20}
+                                    color="#6C5CE7"
                                 />
                             </TouchableOpacity>
                         </View>
                     </View>
 
-                    {/* Login Button */}
                     <TouchableOpacity
                         style={[styles.button, (isLoading || isLoadingCompany) && styles.buttonDisabled]}
-                        activeOpacity={0.8}
+                        activeOpacity={0.82}
                         onPress={handleLogin}
                         disabled={isLoading || isLoadingCompany}
                     >
@@ -193,121 +183,164 @@ export default function EmployeeLoginScreen() {
                         ) : isLoadingCompany ? (
                             <Text style={styles.buttonText}>Loading...</Text>
                         ) : (
-                            <Text style={styles.buttonText}>Sign in</Text>
+                            <>
+                                <MaterialCommunityIcons name="login" size={20} color="#FFFFFF" style={{ marginRight: 8 }} />
+                                <Text style={styles.buttonText}>Sign In</Text>
+                            </>
                         )}
                     </TouchableOpacity>
                 </View>
             </KeyboardAvoidingView>
-        </SafeAreaView>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F8F9FA',
+        backgroundColor: '#1E1B4B',
     },
     backButton: {
         position: 'absolute',
-        top: Platform.OS === 'ios' ? 60 : 40,
+        top: Platform.OS === 'ios' ? 54 : 36,
         left: 20,
         zIndex: 10,
-        padding: 8,
     },
-    keyboardView: {
-        flex: 1,
+    backBtnCircle: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: 'rgba(255,255,255,0.15)',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    formContainer: {
+    heroSection: {
         flex: 1,
         justifyContent: 'center',
-        paddingHorizontal: 24,
-    },
-    header: {
-        fontSize: 32,
-        fontWeight: '800',
-        color: '#1A202C',
-        textAlign: 'center',
-        marginBottom: 8,
-    },
-    subtitle: {
-        fontSize: 16,
-        color: '#718096',
-        textAlign: 'center',
-        marginBottom: 40,
-    },
-    logoContainer: {
         alignItems: 'center',
-        marginBottom: 48,
+        paddingTop: Platform.OS === 'android' ? 60 : 40,
+        paddingBottom: 24,
+        minHeight: 220,
+    },
+    logoBadge: {
+        width: 72,
+        height: 72,
+        borderRadius: 22,
+        backgroundColor: '#6C5CE7',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 18,
+        shadowColor: '#6C5CE7',
+        shadowOffset: { width: 0, height: 8 },
+        shadowOpacity: 0.45,
+        shadowRadius: 18,
+        elevation: 10,
+        borderWidth: 3,
+        borderColor: 'rgba(255,255,255,0.22)',
+    },
+    appName: {
+        fontSize: 26,
+        fontWeight: '800',
+        color: '#FFFFFF',
+        letterSpacing: -0.3,
+        marginBottom: 6,
+    },
+    companyName: {
+        fontSize: 14,
+        color: '#A78BFA',
+        fontWeight: '600',
+        letterSpacing: 0.5,
+    },
+    keyboardView: {
+        flexShrink: 1,
+    },
+    formCard: {
         backgroundColor: '#FFFFFF',
-        paddingVertical: 12,
-        paddingHorizontal: 20,
-        borderRadius: 8,
-        alignSelf: 'center',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.05,
-        shadowRadius: 2,
-        elevation: 2,
+        borderTopLeftRadius: 32,
+        borderTopRightRadius: 32,
+        paddingHorizontal: 28,
+        paddingTop: 34,
+        paddingBottom: Platform.OS === 'ios' ? 44 : 32,
+        shadowColor: '#1E1B4B',
+        shadowOffset: { width: 0, height: -8 },
+        shadowOpacity: 0.15,
+        shadowRadius: 20,
+        elevation: 16,
     },
-    logoTextMain: {
-        fontSize: 28,
-        fontWeight: '700',
-        letterSpacing: 4,
-        color: '#2B6CB0',
+    formTitle: {
+        fontSize: 26,
+        fontWeight: '800',
+        color: '#1E1B4B',
+        marginBottom: 4,
+        letterSpacing: -0.4,
     },
-    logoTextSub: {
-        fontSize: 10,
-        color: '#718096',
-        letterSpacing: 1,
-        marginTop: 4,
+    formSubtitle: {
+        fontSize: 14,
+        color: '#64748B',
+        marginBottom: 28,
+        fontWeight: '500',
     },
     inputSection: {
-        marginBottom: 20,
+        marginBottom: 18,
     },
     label: {
-        fontSize: 14,
-        fontWeight: '600',
-        color: '#2D3748',
+        fontSize: 13,
+        fontWeight: '700',
+        color: '#374151',
         marginBottom: 8,
+        textTransform: 'uppercase',
+        letterSpacing: 0.5,
     },
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#FFFFFF',
-        borderWidth: 1,
-        borderColor: '#E2E8F0',
-        borderRadius: 8,
-        paddingHorizontal: 12,
-        height: 52,
+        backgroundColor: '#F5F3FF',
+        borderWidth: 1.5,
+        borderColor: '#DDD6FE',
+        borderRadius: 14,
+        paddingHorizontal: 14,
+        height: 56,
+        gap: 10,
     },
-    inputIcon: {
-        marginRight: 10,
+    inputIconBox: {
+        width: 32,
+        height: 32,
+        borderRadius: 8,
+        backgroundColor: '#EDE9FE',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     input: {
         flex: 1,
-        fontSize: 16,
-        color: '#1A202C',
+        fontSize: 15,
+        color: '#1E1B4B',
+        fontWeight: '500',
+    },
+    eyeBtn: {
+        padding: 4,
     },
     button: {
-        backgroundColor: '#1E3A8A', // Deep blue as per design
-        borderRadius: 8,
-        height: 52,
+        backgroundColor: '#6C5CE7',
+        borderRadius: 16,
+        height: 58,
+        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: '#1E3A8A',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.2,
-        shadowRadius: 8,
-        elevation: 4,
-        marginTop: 16,
+        shadowColor: '#6C5CE7',
+        shadowOffset: { width: 0, height: 8 },
+        shadowOpacity: 0.35,
+        shadowRadius: 16,
+        elevation: 10,
+        marginTop: 8,
     },
     buttonDisabled: {
-        backgroundColor: '#6B7280',
-        opacity: 0.7,
+        backgroundColor: '#A0AEC0',
+        shadowOpacity: 0.1,
     },
     buttonText: {
         color: '#FFFFFF',
-        fontSize: 16,
+        fontSize: 17,
         fontWeight: '700',
+        letterSpacing: 0.3,
     },
 });

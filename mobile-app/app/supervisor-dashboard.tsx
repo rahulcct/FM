@@ -24,7 +24,7 @@ export const SupervisorBottomNav = ({ activeRoute }: { activeRoute: string }) =>
                 <MaterialCommunityIcons
                     name={activeRoute === 'home' ? 'view-grid' : 'view-grid-outline'}
                     size={24}
-                    color={activeRoute === 'home' ? '#1E3A8A' : '#A0AEC0'}
+                    color={activeRoute === 'home' ? '#6C5CE7' : '#94A3B8'}
                 />
                 <Text style={[navStyles.navText, activeRoute === 'home' && navStyles.navTextActive]}>Home</Text>
             </TouchableOpacity>
@@ -33,7 +33,7 @@ export const SupervisorBottomNav = ({ activeRoute }: { activeRoute: string }) =>
                 <MaterialCommunityIcons
                     name={activeRoute === 'checklists' ? 'format-list-checks' : 'format-list-checkbox'}
                     size={24}
-                    color={activeRoute === 'checklists' ? '#1E3A8A' : '#A0AEC0'}
+                    color={activeRoute === 'checklists' ? '#6C5CE7' : '#94A3B8'}
                 />
                 <Text style={[navStyles.navText, activeRoute === 'checklists' && navStyles.navTextActive]}>Tasks</Text>
             </TouchableOpacity>
@@ -42,7 +42,7 @@ export const SupervisorBottomNav = ({ activeRoute }: { activeRoute: string }) =>
                 <MaterialCommunityIcons
                     name={activeRoute === 'assets' ? 'wrench' : 'wrench-outline'}
                     size={24}
-                    color={activeRoute === 'assets' ? '#1E3A8A' : '#A0AEC0'}
+                    color={activeRoute === 'assets' ? '#6C5CE7' : '#94A3B8'}
                 />
                 <Text style={[navStyles.navText, activeRoute === 'assets' && navStyles.navTextActive]}>Assets</Text>
             </TouchableOpacity>
@@ -51,7 +51,7 @@ export const SupervisorBottomNav = ({ activeRoute }: { activeRoute: string }) =>
                 <MaterialCommunityIcons
                     name={activeRoute === 'profile' ? 'account' : 'account-outline'}
                     size={24}
-                    color={activeRoute === 'profile' ? '#1E3A8A' : '#A0AEC0'}
+                    color={activeRoute === 'profile' ? '#6C5CE7' : '#94A3B8'}
                 />
                 <Text style={[navStyles.navText, activeRoute === 'profile' && navStyles.navTextActive]}>Profile</Text>
             </TouchableOpacity>
@@ -68,7 +68,12 @@ const navStyles = StyleSheet.create({
         paddingVertical: 10,
         paddingBottom: Platform.OS === 'ios' ? 30 : 10,
         borderTopWidth: 1,
-        borderTopColor: '#E2E8F0',
+        borderTopColor: '#EDE9FE',
+        shadowColor: '#6C5CE7',
+        shadowOffset: { width: 0, height: -4 },
+        shadowOpacity: 0.06,
+        shadowRadius: 10,
+        elevation: 12,
     },
     navItem: {
         alignItems: 'center',
@@ -77,12 +82,12 @@ const navStyles = StyleSheet.create({
     },
     navText: {
         fontSize: 11,
-        color: '#A0AEC0',
+        color: '#94A3B8',
         marginTop: 4,
         fontWeight: '500',
     },
     navTextActive: {
-        color: '#1E3A8A',
+        color: '#6C5CE7',
         fontWeight: '700',
     },
 });
@@ -148,7 +153,7 @@ export default function SupervisorDashboardScreen() {
         return (
             <SafeAreaView style={styles.container}>
                 <View style={styles.loadingBox}>
-                    <ActivityIndicator size="large" color="#1E3A8A" />
+                    <ActivityIndicator size="large" color="#6C5CE7" />
                     <Text style={styles.loadingText}>Loading dashboard...</Text>
                 </View>
             </SafeAreaView>
@@ -160,7 +165,7 @@ export default function SupervisorDashboardScreen() {
             {/* ── Header ────────────────────────────────────────────── */}
             <View style={styles.header}>
                 <Animated.View entering={FadeInDown.duration(400).springify()} style={styles.headerAvatar}>
-                    <MaterialCommunityIcons name="account" size={28} color="#2563EB" />
+                    <MaterialCommunityIcons name="account" size={28} color="#A5B4FC" />
                 </Animated.View>
                 <Animated.View entering={FadeInDown.delay(100).duration(400).springify()} style={styles.headerText}>
                     <Text style={styles.headerWelcome}>Welcome back,</Text>
@@ -179,17 +184,17 @@ export default function SupervisorDashboardScreen() {
             <ScrollView
                 style={{ flex: 1 }}
                 showsVerticalScrollIndicator={false}
-                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#2563EB']} />}
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#6C5CE7']} />}
             >
                 <View style={styles.content}>
 
                     {/* ── Stat Cards ─────────────────────────────────────── */}
                     <Animated.View entering={FadeInUp.delay(300).duration(400).springify()} style={styles.statsRow}>
-                        <View style={[styles.statCard, { backgroundColor: '#EFF6FF' }]}>
-                            <View style={[styles.statIconWrap, { backgroundColor: '#DBEAFE' }]}>
-                                <MaterialCommunityIcons name="notebook-outline" size={20} color="#2563EB" />
+                        <View style={[styles.statCard, { backgroundColor: '#EDE9FE' }]}>
+                            <View style={[styles.statIconWrap, { backgroundColor: '#DDD6FE' }]}>
+                                <MaterialCommunityIcons name="notebook-outline" size={20} color="#6C5CE7" />
                             </View>
-                            <Text style={[styles.statNum, { color: '#1E3A8A' }]}>{pendingLogsheets}</Text>
+                            <Text style={[styles.statNum, { color: '#4C3ABA' }]}>{pendingLogsheets}</Text>
                             <Text style={styles.statLabel}>Pending{'\n'}Logsheets</Text>
                         </View>
                         <View style={[styles.statCard, { backgroundColor: '#ECFDF5' }]}>
@@ -230,12 +235,12 @@ export default function SupervisorDashboardScreen() {
                             {/* Legend */}
                             <View style={styles.legend}>
                                 <View style={styles.legendRow}>
-                                    <View style={[styles.legendDot, { backgroundColor: '#2563EB' }]} />
+                                    <View style={[styles.legendDot, { backgroundColor: '#6C5CE7' }]} />
                                     <Text style={styles.legendLabel}>Completed</Text>
                                     <Text style={styles.legendCount}>{completedToday}</Text>
                                 </View>
                                 <View style={styles.legendRow}>
-                                    <View style={[styles.legendDot, { backgroundColor: '#60A5FA' }]} />
+                                    <View style={[styles.legendDot, { backgroundColor: '#A5B4FC' }]} />
                                     <Text style={styles.legendLabel}>In Progress</Text>
                                     <Text style={styles.legendCount}>{inProgressCount}</Text>
                                 </View>
@@ -263,7 +268,7 @@ export default function SupervisorDashboardScreen() {
                                     const priority = (wo.priority || 'medium').toLowerCase();
                                     const statusMap: Record<string, { label: string; bg: string; color: string }> = {
                                         in_progress: { label: 'IN PROGRESS', bg: '#FFF7ED', color: '#D97706' },
-                                        open: { label: 'ASSIGNED', bg: '#EFF6FF', color: '#2563EB' },
+                                        open: { label: 'ASSIGNED', bg: '#EDE9FE', color: '#6C5CE7' },
                                         closed: { label: 'CLOSED', bg: '#ECFDF5', color: '#10B981' },
                                     };
                                     const sc = statusMap[status] || statusMap.open;
@@ -330,7 +335,7 @@ export default function SupervisorDashboardScreen() {
                                     // Avatar background color cycle
                                     const avatarBgs = ['#EFF6FF', '#ECFDF5', '#FEF2F2', '#FAF5FF'];
                                     const avatarBg = avatarBgs[idx % avatarBgs.length];
-                                    const avatarTxtColors = ['#2563EB', '#059669', '#DC2626', '#7C3AED'];
+                                    const avatarTxtColors = ['#6C5CE7', '#059669', '#DC2626', '#0891B2'];
                                     const avatarTxt = avatarTxtColors[idx % avatarTxtColors.length];
                                     return (
                                         <Animated.View key={member.id} entering={FadeInUp.delay(650 + (idx * 50)).duration(400).springify()} style={styles.techCard}>
@@ -397,7 +402,7 @@ function DonutRing({ pct }: { pct: number }) {
                 <View style={{
                     position: 'absolute', left: -RING_SIZE / 2, top: 0,
                     width: RING_SIZE, height: RING_SIZE, borderRadius: RING_SIZE / 2,
-                    backgroundColor: pct > 0 ? '#2563EB' : '#E2E8F0',
+                    backgroundColor: pct > 0 ? '#6C5CE7' : '#E2E8F0',
                     transform: [{ rotate: `${rightRot}deg` }],
                 }} />
             </View>
@@ -406,7 +411,7 @@ function DonutRing({ pct }: { pct: number }) {
                 <View style={{
                     position: 'absolute', right: -RING_SIZE / 2, top: 0,
                     width: RING_SIZE, height: RING_SIZE, borderRadius: RING_SIZE / 2,
-                    backgroundColor: pct > 50 ? '#2563EB' : '#E2E8F0',
+                    backgroundColor: pct > 50 ? '#6C5CE7' : '#E2E8F0',
                     transform: [{ rotate: `${leftRot}deg` }],
                 }} />
             </View>
@@ -427,9 +432,9 @@ function DonutRing({ pct }: { pct: number }) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#FAF9F6' },
+    container: { flex: 1, backgroundColor: '#F5F3FF' },
     loadingBox: { flex: 1, justifyContent: 'center', alignItems: 'center', gap: 16 },
-    loadingText: { fontSize: 15, color: '#64748B', fontWeight: '500' },
+    loadingText: { fontSize: 15, color: '#6C5CE7', fontWeight: '500' },
 
     // Header
     header: {
@@ -438,30 +443,30 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 16,
         paddingTop: Platform.OS === 'android' ? 48 : 20,
-        backgroundColor: '#FAF9F6',
+        backgroundColor: '#1E1B4B',
         gap: 14,
     },
     headerAvatar: {
         width: 52,
         height: 52,
         borderRadius: 26,
-        backgroundColor: '#EFF6FF',
+        backgroundColor: 'rgba(108,92,231,0.3)',
         borderWidth: 2,
-        borderColor: '#DBEAFE',
+        borderColor: '#6C5CE7',
         justifyContent: 'center',
         alignItems: 'center',
     },
     headerText: { flex: 1 },
-    headerWelcome: { fontSize: 13, color: '#64748B', fontWeight: '600' },
-    headerName: { fontSize: 18, fontWeight: '800', color: '#0F172A', marginTop: 2, letterSpacing: -0.5 },
+    headerWelcome: { fontSize: 13, color: '#A5B4FC', fontWeight: '600' },
+    headerName: { fontSize: 18, fontWeight: '800', color: '#FFFFFF', marginTop: 2, letterSpacing: -0.5 },
     bellBtn: { padding: 4 },
     bellCircle: {
         width: 44,
         height: 44,
         borderRadius: 22,
-        backgroundColor: '#F1F5F9',
+        backgroundColor: 'rgba(255,255,255,0.12)',
         borderWidth: 1,
-        borderColor: '#E2E8F0',
+        borderColor: 'rgba(255,255,255,0.2)',
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -474,7 +479,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: '#EF4444',
         borderWidth: 2,
-        borderColor: '#FAF9F6',
+        borderColor: '#1E1B4B',
     },
 
     content: { padding: 20, paddingTop: 16, paddingBottom: 20 },
@@ -487,13 +492,13 @@ const styles = StyleSheet.create({
         padding: 16,
         alignItems: 'center',
         gap: 8,
-        shadowColor: '#64748B',
+        shadowColor: '#6C5CE7',
         shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.05,
+        shadowOpacity: 0.10,
         shadowRadius: 8,
-        elevation: 2,
+        elevation: 3,
         borderWidth: 1,
-        borderColor: '#FFFFFF', // Creates a clean edge for light backgrounds
+        borderColor: 'rgba(255,255,255,0.6)',
     },
     statIconWrap: {
         width: 42,
@@ -508,16 +513,16 @@ const styles = StyleSheet.create({
     // Progress card
     progressCard: {
         backgroundColor: '#FFFFFF',
-        borderRadius: 16,
+        borderRadius: 20,
         padding: 20,
         marginBottom: 20,
-        shadowColor: '#64748B',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.04,
-        shadowRadius: 8,
-        elevation: 2,
+        shadowColor: '#6C5CE7',
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.08,
+        shadowRadius: 12,
+        elevation: 3,
         borderWidth: 1,
-        borderColor: '#F1F5F9',
+        borderColor: '#EDE9FE',
     },
     progressCardHeader: {
         flexDirection: 'row',
@@ -525,7 +530,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         marginBottom: 20,
     },
-    progressTitle: { fontSize: 16, fontWeight: '800', color: '#0F172A', letterSpacing: -0.2 },
+    progressTitle: { fontSize: 16, fontWeight: '800', color: '#1E1B4B', letterSpacing: -0.2 },
     progressSub: { fontSize: 13, color: '#64748B', marginTop: 3, fontWeight: '500' },
     trendBadge: {
         flexDirection: 'row',
@@ -543,7 +548,7 @@ const styles = StyleSheet.create({
     legendRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
     legendDot: { width: 12, height: 12, borderRadius: 6 },
     legendLabel: { flex: 1, fontSize: 13, color: '#64748B', fontWeight: '600' },
-    legendCount: { fontSize: 15, fontWeight: '800', color: '#0F172A' },
+    legendCount: { fontSize: 15, fontWeight: '800', color: '#1E1B4B' },
 
     // Technicians section
     techHeader: {
@@ -552,8 +557,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 14,
     },
-    sectionTitle: { fontSize: 17, fontWeight: '800', color: '#0F172A', letterSpacing: -0.2 },
-    viewAllText: { fontSize: 14, fontWeight: '700', color: '#2563EB' },
+    sectionTitle: { fontSize: 17, fontWeight: '800', color: '#1E1B4B', letterSpacing: -0.2 },
+    viewAllText: { fontSize: 14, fontWeight: '700', color: '#6C5CE7' },
     emptyTeam: { alignItems: 'center', paddingVertical: 24, gap: 10 },
     emptyTeamText: { fontSize: 14, color: '#94A3B8', fontWeight: '500' },
     techCard: {
@@ -563,25 +568,25 @@ const styles = StyleSheet.create({
         borderRadius: 16,
         padding: 16,
         marginBottom: 12,
-        shadowColor: '#64748B',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.04,
-        shadowRadius: 6,
-        elevation: 1,
+        shadowColor: '#6C5CE7',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.07,
+        shadowRadius: 8,
+        elevation: 2,
         gap: 14,
         borderWidth: 1,
-        borderColor: '#F1F5F9',
+        borderColor: '#EDE9FE',
     },
     techAvatar: {
         width: 48,
         height: 48,
         borderRadius: 24,
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#EDE9FE',
         justifyContent: 'center',
         alignItems: 'center',
         flexShrink: 0,
     },
-    techInitials: { fontSize: 15, fontWeight: '800', color: '#2563EB' },
+    techInitials: { fontSize: 15, fontWeight: '800', color: '#6C5CE7' },
     statusDot: {
         position: 'absolute',
         bottom: 1,
@@ -594,15 +599,15 @@ const styles = StyleSheet.create({
         borderColor: '#FFFFFF',
     },
     techInfo: { flex: 1 },
-    techName: { fontSize: 15, fontWeight: '800', color: '#0F172A', letterSpacing: -0.2 },
+    techName: { fontSize: 15, fontWeight: '800', color: '#1E1B4B', letterSpacing: -0.2 },
     techRole: { fontSize: 13, color: '#64748B', marginTop: 3, textTransform: 'capitalize', fontWeight: '500' },
     msgBtn: {
         width: 40,
         height: 40,
         borderRadius: 10,
-        backgroundColor: '#F8FAFC',
+        backgroundColor: '#F5F3FF',
         borderWidth: 1,
-        borderColor: '#E2E8F0',
+        borderColor: '#DDD6FE',
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -615,10 +620,10 @@ const styles = StyleSheet.create({
         borderRadius: 16,
         padding: 16,
         borderWidth: 1,
-        borderColor: '#F1F5F9',
-        shadowColor: '#64748B',
+        borderColor: '#EDE9FE',
+        shadowColor: '#6C5CE7',
         shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.04,
+        shadowOpacity: 0.07,
         shadowRadius: 8,
         elevation: 2,
         marginBottom: 4,
@@ -627,7 +632,7 @@ const styles = StyleSheet.create({
     woStatusBadge: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 6 },
     woStatusText: { fontSize: 10, fontWeight: '800', letterSpacing: 0.5 },
     woNumber: { fontSize: 12, color: '#94A3B8', fontWeight: '700' },
-    woTitle: { fontSize: 15, fontWeight: '700', color: '#0F172A', marginBottom: 12, lineHeight: 22 },
+    woTitle: { fontSize: 15, fontWeight: '700', color: '#1E1B4B', marginBottom: 12, lineHeight: 22 },
     woPriorityRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
     woPriorityText: { fontSize: 13, fontWeight: '600' },
 
@@ -636,16 +641,16 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#2563EB',
+        backgroundColor: '#6C5CE7',
         borderRadius: 16,
         paddingVertical: 18,
         marginTop: 10,
         gap: 12,
-        shadowColor: '#2563EB',
+        shadowColor: '#6C5CE7',
         shadowOffset: { width: 0, height: 6 },
-        shadowOpacity: 0.2,
-        shadowRadius: 10,
-        elevation: 4,
+        shadowOpacity: 0.3,
+        shadowRadius: 12,
+        elevation: 6,
     },
     assignBtnText: { color: '#FFFFFF', fontSize: 16, fontWeight: '800', letterSpacing: 0.3 },
 });

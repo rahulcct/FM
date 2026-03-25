@@ -6,7 +6,6 @@ import {
     Alert,
     KeyboardAvoidingView,
     Platform,
-    SafeAreaView,
     StyleSheet,
     Text,
     TextInput,
@@ -54,16 +53,19 @@ export default function LoginScreen() {
     // Show loading screen while checking auth
     if (isCheckingAuth) {
         return (
-            <SafeAreaView style={styles.container}>
-                <View style={[styles.formContainer, styles.centerContent]}>
-                    <View style={styles.logoContainer}>
-                        <Text style={styles.logoTextMain}>C A T A L Y S T</Text>
-                        <Text style={styles.logoTextSub}>PARTNERING FOR SUSTAINABILITY</Text>
+            <View style={styles.container}>
+                <View style={styles.heroSection}>
+                    <View style={styles.logoBadge}>
+                        <MaterialCommunityIcons name="lightning-bolt" size={34} color="#FFFFFF" />
                     </View>
-                    <ActivityIndicator size="large" color="#1E3A8A" style={styles.loader} />
-                    <Text style={styles.loadingText}>Loading...</Text>
+                    <Text style={styles.appName}>C A T A L Y S T</Text>
+                    <Text style={styles.appTagline}>Facility Management System</Text>
                 </View>
-            </SafeAreaView>
+                <View style={[styles.formCard, { justifyContent: 'center', alignItems: 'center', paddingVertical: 56 }]}>
+                    <ActivityIndicator size="large" color="#6C5CE7" />
+                    <Text style={[styles.formSubtitle, { marginTop: 16 }]}>Signing you in...</Text>
+                </View>
+            </View>
         );
     }
 
@@ -91,37 +93,40 @@ export default function LoginScreen() {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 style={styles.keyboardView}
             >
-                <View style={styles.formContainer}>
-                    {/* Header section */}
-                        <Text style={styles.header}>Welcome to FM</Text>
-                        <Text style={styles.subtitle}>Fast, friendly, colorful — get started with your company code</Text>
-
-                    {/* Logo Placeholder */}
-                    <View style={styles.logoContainer}>
-                        <View style={styles.logoBadge} />
-                        <Text style={styles.logoTextMain}>C A T A L Y S T</Text>
-                        <Text style={styles.logoTextSub}>Partnering for sustainability</Text>
+                {/* Hero / Brand Section */}
+                <View style={styles.heroSection}>
+                    <View style={styles.logoBadge}>
+                        <MaterialCommunityIcons name="lightning-bolt" size={34} color="#FFFFFF" />
                     </View>
+                    <Text style={styles.appName}>C A T A L Y S T</Text>
+                    <Text style={styles.appTagline}>Facility Management System</Text>
+                    <View style={styles.subtitleRow}>
+                        <View style={styles.subtitleDot} />
+                        <Text style={styles.subtitleText}>Smart · Fast · Reliable</Text>
+                        <View style={styles.subtitleDot} />
+                    </View>
+                </View>
 
-                    {/* Input section */}
+                {/* Form Card */}
+                <View style={styles.formCard}>
+                    <Text style={styles.formTitle}>Get Started</Text>
+                    <Text style={styles.formSubtitle}>Enter your company code to continue</Text>
+
                     <View style={styles.inputSection}>
                         <Text style={styles.label}>Company Code</Text>
                         <View style={styles.inputContainer}>
-                            <MaterialCommunityIcons
-                                name="office-building"
-                                size={24}
-                                color="#8E8E93"
-                                style={styles.inputIcon}
-                            />
+                            <View style={styles.inputIconBox}>
+                                <MaterialCommunityIcons name="office-building" size={18} color="#6C5CE7" />
+                            </View>
                             <TextInput
                                 style={styles.input}
-                                placeholder="Enter company code"
-                                placeholderTextColor="#C7C7CC"
+                                placeholder="e.g. ACME2024"
+                                placeholderTextColor="#A0AEC0"
                                 value={companyCode}
                                 onChangeText={setCompanyCode}
                                 autoCapitalize="characters"
@@ -130,186 +135,197 @@ export default function LoginScreen() {
                         </View>
                     </View>
 
-                    {/* Login Button */}
                     <TouchableOpacity
                         style={[styles.button, isVerifying && styles.buttonDisabled]}
-                        activeOpacity={0.8}
+                        activeOpacity={0.82}
                         onPress={handleVerifyCompany}
                         disabled={isVerifying}
                     >
                         {isVerifying ? (
                             <ActivityIndicator color="#FFFFFF" />
                         ) : (
-                            <Text style={styles.buttonText}>Continue</Text>
+                            <>
+                                <Text style={styles.buttonText}>Continue</Text>
+                                <MaterialCommunityIcons name="arrow-right" size={20} color="#FFFFFF" style={{ marginLeft: 8 }} />
+                            </>
                         )}
                     </TouchableOpacity>
+
+                    <Text style={styles.footerNote}>
+                        By continuing, you agree to our{' '}
+                        <Text style={styles.footerLink}>Terms of Service</Text>
+                    </Text>
                 </View>
             </KeyboardAvoidingView>
-        </SafeAreaView>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F8F9FA',
+        backgroundColor: '#1E1B4B',
     },
     keyboardView: {
         flex: 1,
     },
-    formContainer: {
+
+    // Hero branding section (top purple area)
+    heroSection: {
         flex: 1,
         justifyContent: 'center',
-        paddingHorizontal: 24,
-    },
-    centerContent: {
         alignItems: 'center',
+        paddingTop: Platform.OS === 'android' ? 40 : 20,
+        paddingBottom: 32,
     },
-    header: {
-        fontSize: 32,
-        fontWeight: '800',
-        color: '#1A202C',
-        textAlign: 'center',
-        marginBottom: 8,
-    },
-    subtitle: {
-        fontSize: 16,
-        color: '#718096',
-        textAlign: 'center',
-        marginBottom: 40,
-    },
-    logoContainer: {
+    logoBadge: {
+        width: 80,
+        height: 80,
+        borderRadius: 24,
+        backgroundColor: '#6C5CE7',
+        justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 48,
-        backgroundColor: '#FFFFFF',
-        paddingVertical: 12,
-        paddingHorizontal: 20,
-        borderRadius: 8,
-        alignSelf: 'center',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.05,
-        shadowRadius: 2,
-        elevation: 2,
+        marginBottom: 20,
+        shadowColor: '#6C5CE7',
+        shadowOffset: { width: 0, height: 8 },
+        shadowOpacity: 0.45,
+        shadowRadius: 20,
+        elevation: 12,
+        borderWidth: 3,
+        borderColor: 'rgba(255,255,255,0.2)',
     },
-    logoTextMain: {
-        fontSize: 28,
-        fontWeight: '700',
-        letterSpacing: 4,
-        color: '#2B6CB0',
+    appName: {
+        fontSize: 26,
+        fontWeight: '900',
+        color: '#FFFFFF',
+        letterSpacing: 5,
+        marginBottom: 6,
     },
-    logoTextSub: {
-        fontSize: 10,
-        color: '#718096',
+    appTagline: {
+        fontSize: 13,
+        color: 'rgba(255,255,255,0.7)',
         letterSpacing: 1,
-        marginTop: 4,
+        marginBottom: 16,
     },
-    loader: {
-        marginTop: 24,
+    subtitleRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
     },
-    loadingText: {
-        fontSize: 16,
-        color: '#718096',
-        marginTop: 12,
+    subtitleDot: {
+        width: 4,
+        height: 4,
+        borderRadius: 2,
+        backgroundColor: '#A78BFA',
     },
+    subtitleText: {
+        fontSize: 12,
+        color: '#A78BFA',
+        fontWeight: '600',
+        letterSpacing: 0.5,
+    },
+
+    // Form Card (white section at bottom)
+    formCard: {
+        backgroundColor: '#FFFFFF',
+        borderTopLeftRadius: 32,
+        borderTopRightRadius: 32,
+        paddingHorizontal: 28,
+        paddingTop: 36,
+        paddingBottom: Platform.OS === 'ios' ? 40 : 32,
+        shadowColor: '#1E1B4B',
+        shadowOffset: { width: 0, height: -8 },
+        shadowOpacity: 0.15,
+        shadowRadius: 20,
+        elevation: 16,
+    },
+    formTitle: {
+        fontSize: 26,
+        fontWeight: '800',
+        color: '#1E1B4B',
+        marginBottom: 6,
+        letterSpacing: -0.4,
+    },
+    formSubtitle: {
+        fontSize: 14,
+        color: '#64748B',
+        marginBottom: 28,
+        fontWeight: '500',
+    },
+
+    // Input
     inputSection: {
-        marginBottom: 24,
+        marginBottom: 20,
     },
     label: {
-        fontSize: 14,
-        fontWeight: '600',
-        color: '#2D3748',
+        fontSize: 13,
+        fontWeight: '700',
+        color: '#374151',
         marginBottom: 8,
+        textTransform: 'uppercase',
+        letterSpacing: 0.5,
     },
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#FFFFFF',
-        borderWidth: 1,
-        borderColor: '#E2E8F0',
-        borderRadius: 8,
-        paddingHorizontal: 12,
-        height: 52,
+        backgroundColor: '#F5F3FF',
+        borderWidth: 1.5,
+        borderColor: '#DDD6FE',
+        borderRadius: 14,
+        paddingHorizontal: 14,
+        height: 56,
+        gap: 12,
     },
-    inputIcon: {
-        marginRight: 10,
+    inputIconBox: {
+        width: 32,
+        height: 32,
+        borderRadius: 8,
+        backgroundColor: '#EDE9FE',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     input: {
         flex: 1,
         fontSize: 16,
-        color: '#1A202C',
+        color: '#1E1B4B',
+        fontWeight: '500',
     },
+
+    // Button
     button: {
         backgroundColor: '#6C5CE7',
-        borderRadius: 14,
-        height: 56,
+        borderRadius: 16,
+        height: 58,
+        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
         shadowColor: '#6C5CE7',
-        shadowOffset: { width: 0, height: 6 },
-        shadowOpacity: 0.18,
-        shadowRadius: 12,
-        elevation: 6,
-        marginTop: 12,
+        shadowOffset: { width: 0, height: 8 },
+        shadowOpacity: 0.35,
+        shadowRadius: 16,
+        elevation: 10,
+        marginTop: 8,
     },
     buttonDisabled: {
-        backgroundColor: '#9CA3AF',
-        opacity: 0.7,
+        backgroundColor: '#A0AEC0',
+        shadowOpacity: 0.1,
     },
     buttonText: {
         color: '#FFFFFF',
-        fontSize: 16,
+        fontSize: 17,
         fontWeight: '700',
+        letterSpacing: 0.3,
     },
-    logoBadge: {
-        width: 64,
-        height: 64,
-        borderRadius: 18,
-        backgroundColor: '#00B894',
-        marginBottom: 12,
-        shadowColor: '#00B894',
-        shadowOffset: { width: 0, height: 6 },
-        shadowOpacity: 0.12,
-        shadowRadius: 12,
-        elevation: 4,
-    },
-    header: {
-        fontSize: 30,
-        fontWeight: '800',
-        color: '#102027',
+
+    // Footer
+    footerNote: {
         textAlign: 'center',
-        marginBottom: 6,
-    },
-    subtitle: {
-        fontSize: 15,
-        color: '#4B5563',
-        textAlign: 'center',
-        marginBottom: 28,
-    },
-    logoTextMain: {
-        fontSize: 22,
-        fontWeight: '800',
-        letterSpacing: 3,
-        color: '#102027',
-    },
-    logoTextSub: {
         fontSize: 12,
-        color: '#6B7280',
-        letterSpacing: 0.8,
-        marginTop: 4,
+        color: '#94A3B8',
+        marginTop: 20,
     },
-    formCard: {
-        backgroundColor: '#FFFFFF',
-        borderRadius: 20,
-        padding: 20,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 8 },
-        shadowOpacity: 0.06,
-        shadowRadius: 18,
-        elevation: 8,
-    },
-    container: {
-        flex: 1,
-        backgroundColor: '#F7FBFF',
+    footerLink: {
+        color: '#6C5CE7',
+        fontWeight: '600',
     },
 });
