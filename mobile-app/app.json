@@ -47,10 +47,7 @@
       "reactCompiler": true
     },
     "extra": {
-      "router": {},
-      "eas": {
-        "projectId": "c1750259-4dd3-4a00-8fb7-d1c931870d93"
-      }
+      "router": {}
     },
     "owner": "cct123"
   }
