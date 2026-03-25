@@ -98,13 +98,14 @@ export default function LoginScreen() {
             >
                 <View style={styles.formContainer}>
                     {/* Header section */}
-                    <Text style={styles.header}>Welcome</Text>
-                    <Text style={styles.subtitle}>Enter your company code to continue</Text>
+                        <Text style={styles.header}>Welcome to FM</Text>
+                        <Text style={styles.subtitle}>Fast, friendly, colorful — get started with your company code</Text>
 
                     {/* Logo Placeholder */}
                     <View style={styles.logoContainer}>
+                        <View style={styles.logoBadge} />
                         <Text style={styles.logoTextMain}>C A T A L Y S T</Text>
-                        <Text style={styles.logoTextSub}>PARTNERING FOR SUSTAINABILITY</Text>
+                        <Text style={styles.logoTextSub}>Partnering for sustainability</Text>
                     </View>
 
                     {/* Input section */}
@@ -239,25 +240,76 @@ const styles = StyleSheet.create({
         color: '#1A202C',
     },
     button: {
-        backgroundColor: '#1E3A8A', // Deep blue as per design
-        borderRadius: 8,
-        height: 52,
+        backgroundColor: '#6C5CE7',
+        borderRadius: 14,
+        height: 56,
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: '#1E3A8A',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.2,
-        shadowRadius: 8,
-        elevation: 4,
-        marginTop: 8,
+        shadowColor: '#6C5CE7',
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.18,
+        shadowRadius: 12,
+        elevation: 6,
+        marginTop: 12,
     },
     buttonDisabled: {
-        backgroundColor: '#6B7280',
+        backgroundColor: '#9CA3AF',
         opacity: 0.7,
     },
     buttonText: {
         color: '#FFFFFF',
         fontSize: 16,
         fontWeight: '700',
+    },
+    logoBadge: {
+        width: 64,
+        height: 64,
+        borderRadius: 18,
+        backgroundColor: '#00B894',
+        marginBottom: 12,
+        shadowColor: '#00B894',
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.12,
+        shadowRadius: 12,
+        elevation: 4,
+    },
+    header: {
+        fontSize: 30,
+        fontWeight: '800',
+        color: '#102027',
+        textAlign: 'center',
+        marginBottom: 6,
+    },
+    subtitle: {
+        fontSize: 15,
+        color: '#4B5563',
+        textAlign: 'center',
+        marginBottom: 28,
+    },
+    logoTextMain: {
+        fontSize: 22,
+        fontWeight: '800',
+        letterSpacing: 3,
+        color: '#102027',
+    },
+    logoTextSub: {
+        fontSize: 12,
+        color: '#6B7280',
+        letterSpacing: 0.8,
+        marginTop: 4,
+    },
+    formCard: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 20,
+        padding: 20,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 8 },
+        shadowOpacity: 0.06,
+        shadowRadius: 18,
+        elevation: 8,
+    },
+    container: {
+        flex: 1,
+        backgroundColor: '#F7FBFF',
     },
 });
